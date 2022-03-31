@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HomeworkModel} from "../../models/homeworkModel";
 import {NgForm} from "@angular/forms";
 import {HomeworkService} from "../../services/homework.service";
 import {ToastrService} from "ngx-toastr";
+import * as Editor from "ckeditor5-33.0.0-5luuruis862l/build/ckeditor";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ export class DashboardComponent implements OnInit {
 
   isLoading: false;
   homework: HomeworkModel = {id: 0, week: 0, type: 0, date: "", title: "", description: ""}
+  Editor = Editor;
 
   constructor(private toast: ToastrService, private homeworkService: HomeworkService) {
   }
@@ -21,10 +23,10 @@ export class DashboardComponent implements OnInit {
   }
 
   save(form: NgForm) {
-    // if (!form.valid) {
-    //   this.toast.error("lutfen bilgileri kontrol et")
-    //   return;
-    // }
+    if (!form.valid) {
+      this.toast.error("lutfen bilgileri kontrol et")
+      return;
+    }
     this.homework = Object.assign(form.value)
     let model: HomeworkModel = {
       id: 0,

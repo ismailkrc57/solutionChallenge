@@ -70,15 +70,19 @@ export class HomeworkComponent implements OnInit {
         })
       }
     })
+
     this.isLoading = true;
     this.route.params.subscribe({
       next: (params: Params) => {
+        this.isLoading = true;
         this.homeworkId = params['id']
         this.homeworkService.getById(this.homeworkId).subscribe({
           next: res => {
+            this.isLoading = false;
             this.homework = res.data
 
           }, error: err => {
+            this.isLoading = false;
             this.router.navigate(["/home/start"]).then()
           }
         })
