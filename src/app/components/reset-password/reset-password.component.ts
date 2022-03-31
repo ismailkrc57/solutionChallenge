@@ -12,6 +12,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   isValid: boolean = true;
+  isLoading = false;
   token: string = "";
 
   constructor(private router: Router, private toastr: ToastrService, private naviService: NaviService, private activatedRoute: ActivatedRoute, private userService: UserService) {
@@ -22,6 +23,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
 
     this.naviService.setIsVisible(false)
     this.activatedRoute.params.subscribe({
@@ -29,9 +31,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.token = params['token'];
         this.userService.isTokenValid(this.token).subscribe({
           next: res => {
+            this.isLoading=false;
             this.isValid = true;
           },
           error: err => {
+            this.isLoading = false
             this.isValid = false
           }
         })
