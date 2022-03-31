@@ -14,6 +14,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   isValid: boolean = true;
   isLoading = false;
   token: string = "";
+  isLoadingBtn: boolean = false;
 
   constructor(private router: Router, private toastr: ToastrService, private naviService: NaviService, private activatedRoute: ActivatedRoute, private userService: UserService) {
   }
@@ -31,7 +32,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.token = params['token'];
         this.userService.isTokenValid(this.token).subscribe({
           next: res => {
-            this.isLoading=false;
+            this.isLoading = false;
             this.isValid = true;
           },
           error: err => {
@@ -47,8 +48,12 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   save(f: NgForm) {
 
-    if (!f.valid)
+    this.isLoadingBtn = true;
+    if (!f.valid) {
       this.toastr.warning("Lutfen girdiğiniz bilgileri kontrol edin")
+      this.isLoadingBtn = false;
+      return;
+    }
     this.userService.changePasswordWithToken(this.token, f.value.password).subscribe({
       next: res => {
         this.toastr.success("Şifreniz başarılı bir şekilde değiştirldi")
@@ -57,6 +62,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       },
       error: err => {
         this.toastr.error("bilinmeyen bir hata oldu")
+        this.isLoadingBtn = false;
       }
     })
 
