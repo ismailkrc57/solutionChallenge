@@ -36,6 +36,7 @@ import { HStartComponent } from './components/start/h-start/h-start.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SpinnerCircComponent } from './components/shared/spinner-circ/spinner-circ.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { NotFoundComponent } from './components/shared/not-found/not-found.compo
     ResetPasswordComponent,
     SpinnerCircComponent,
     NotFoundComponent,
+    DashboardComponent,
 
 
   ],

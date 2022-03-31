@@ -1,0 +1,90 @@
+<div class="d-flex flex-column align-items-center h-100  justify-content-center">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <div *ngIf="!isLoading" class="card  mb-3" style="max-width: 800px;">
+    <div class="row g-0">
+      <div class="col-12">
+        <div class="card-body">
+          <h1 class="card-title">Ödev Oluştur</h1>
+          <hr>
+          <form #homeworkForm="ngForm">
+            <div class="row mb-1">
+              <div class="col-12">
+                <div class="form-floating">
+                  <ckeditor required ngModel #description="ngModel" name="description" [editor]="Editor"></ckeditor>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-6">
+                <div class="form-floating mb-1">
+                  <input required ngModel name="title" type="text" #title="ngModel"
+                         class="form-control" id="floatingEmail"
+                         [ngClass]="{'is-invalid':title.invalid && title.touched}"
+                         placeholder="Title">
+                  <label for="floatingEmail">Title</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating mb-1">
+                  <input required ngModel name="date" type="date" #date="ngModel"
+                         class="form-control"
+                         [ngClass]="{'is-invalid':date.invalid && date.touched}"
+                         id="floatingUsername" placeholder="Date">
+                  <label for="floatingUsername">Date</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-6">
+                <div class="form-floating">
+                  <select  [ngClass]="{'is-invalid':week.invalid && week.touched}" ngModel #week="ngModel" required name="week" class="form-select" id="floatingSelect"
+                          aria-label="Floating label select example">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                  </select>
+                  <label for="floatingSelect">Week</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating">
+                  <select  [ngClass]="{'is-invalid':type.invalid && type.touched}" required ngModel #type="ngModel" name="type" class="form-select" id="floatingSelect2"
+                          aria-label="Floating label select example">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                  <label for="floatingSelect">Type</label>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="row">
+              <div class="col">
+                <button (click)="save(homeworkForm)"
+                        [disabled]="!homeworkForm.valid"
+                        class="btn btn-primary">Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

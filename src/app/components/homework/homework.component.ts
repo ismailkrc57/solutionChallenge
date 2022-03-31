@@ -47,6 +47,8 @@ export class HomeworkComponent implements OnInit {
   public Editor = Editor;
   public solutionDesc: String = "";
 
+  isLoading = false;
+
   faShare = faShare;
   faEdit = faFileEdit;
   faRemove = faTrash;
@@ -68,14 +70,19 @@ export class HomeworkComponent implements OnInit {
         })
       }
     })
+
+    this.isLoading = true;
     this.route.params.subscribe({
       next: (params: Params) => {
+        this.isLoading = true;
         this.homeworkId = params['id']
         this.homeworkService.getById(this.homeworkId).subscribe({
           next: res => {
+            this.isLoading = false;
             this.homework = res.data
 
           }, error: err => {
+            this.isLoading = false;
             this.router.navigate(["/home/start"]).then()
           }
         })
@@ -85,11 +92,13 @@ export class HomeworkComponent implements OnInit {
             this.solutions = res.data;
             this.commentService.getAllByHomework(this.homeworkId).subscribe({
               next: res => {
+                this.isLoading = false;
                 this.comments = res.data
               }
             })
           },
           error: err => {
+            this.isLoading = false;
             this.router.navigate(["/home/start"]).then()
           }
         })
@@ -98,8 +107,10 @@ export class HomeworkComponent implements OnInit {
   }
 
   sendSolution(form: NgForm) {
+    this.isLoadingSendBtn = true;
     if (!form.valid && form.value.solution <= 0) {
       this.toastr.warning("Lütfen Bir Çözüm Giriniz")
+      this.isLoadingSendBtn = false;
       return;
     } else {
       if (this.solutionUpdateModel) {
@@ -121,6 +132,7 @@ export class HomeworkComponent implements OnInit {
             this.toastr.success("Çözümün Güncellendi :)")
             this.solutionService.getAllByHomework(this.homeworkId).subscribe({
               next: res => {
+                this.isLoadingSendBtn = false;
                 this.solutions = res.data
                 this.solutionUpdateModel = null;
                 form.reset();
@@ -136,6 +148,7 @@ export class HomeworkComponent implements OnInit {
         this.solutionService.add(this.solution).subscribe(a => {
           this.solutionService.getAllByHomework(this.homeworkId).subscribe({
             next: res => {
+              this.isLoadingSendBtn = false;
               this.solutions = res.data
               form.reset()
             }
@@ -157,11 +170,13 @@ export class HomeworkComponent implements OnInit {
   }
 
   deleteSolution(solution: SolutionModel) {
+    this.isLoadingDeleteBtn = true;
     this.solutionService.delete({id: solution.id}).subscribe({
       next: res => {
         this.toastr.success("Çözümün Silindi")
         this.solutionService.getAllByHomework(this.homeworkId).subscribe({
           next: res => {
+            this.isLoadingDeleteBtn = false;
             this.solutions = res.data
           }
         })
@@ -187,10 +202,16 @@ export class HomeworkComponent implements OnInit {
   }
 
   isValid = false;
+  isLoadingSendBtn: boolean = false;
+  isLoadingDeleteBtn = false;
+  isLoadingSendComment = false;
+  isLoadingDeleteComment = false;
 
   sendComment(commentForm: NgForm, solutionId: number) {
+    this.isLoadingSendComment = true;
     if (!commentForm.valid) {
       this.toastr.warning("lütfen yorum alanını boş bırakmayın")
+      this.isLoadingSendComment = false;
       return;
     }
     let commentAddModel: CommentAddModel = {
@@ -211,6 +232,7 @@ export class HomeworkComponent implements OnInit {
         this.commentService.getAllByHomework(this.homeworkId).subscribe({
           next: res => {
             this.comments = res.data
+            this.isLoadingSendComment = false;
             commentForm.reset()
           }
         })
@@ -220,13 +242,15 @@ export class HomeworkComponent implements OnInit {
   }
 
   deleteComment(comment: CommentModel) {
+    this.isLoadingDeleteComment = true;
     let solution = {id: comment.id}
     this.commentService.delete(solution).subscribe({
       next: res => {
-        this.toastr.success("Yorumun silindi!")
         this.commentService.getAllByHomework(this.homeworkId).subscribe({
           next: res => {
+            this.toastr.success("Yorumun silindi!")
             this.comments = res.data
+            this.isLoadingDeleteComment = false;
           }
         })
       }

@@ -11,9 +11,12 @@ import {StartComponent} from "./components/start/start.component";
 import {HStartComponent} from "./components/start/h-start/h-start.component";
 import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
 import {NotFoundComponent} from "./components/shared/not-found/not-found.component";
+import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {AdminGuard} from "./guards/admin.guard";
 
 const routes: Routes = [
 
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard]},
   {path: 'reset-password/:token', component: ResetPasswordComponent, pathMatch: "full"},
   {path: '', redirectTo: 'home/start', pathMatch: 'full'},
   {
