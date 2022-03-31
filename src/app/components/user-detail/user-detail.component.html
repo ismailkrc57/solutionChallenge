@@ -1,0 +1,195 @@
+<div class="container" style="min-height: 580px">
+  <div class="row d-flex justify-content-around align-items-center">
+
+    <div class="col">
+      <div class="d-flex flex-row justify-content-center align-items-center w-100">
+        <div class="row">
+          <div class="col-12 justify-content-center align-items-center d-flex mb-1">
+            <img src="https://picsum.photos/200/200" width="150px" class="img-fluid rounded-circle" alt="">
+          </div>
+          <div class="col-12 justify-content-center align-items-center d-flex">
+            <h2>{{userFullName|uppercase}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="row">
+      <div class="row">
+        <div class="col">
+          <div class="d-flex flex-column align-items-center h-100  justify-content-center">
+            <div class="card  mb-3" style="max-width: 500px;">
+              <div class="row g-0">
+                <div class="col-12">
+                  <div class="card-body">
+                    <h1 class="card-title">Bilgilerim</h1>
+                    <hr>
+                    <form #registerForm="ngForm">
+                      <div class="row mb-1">
+                        <div class="col-sm-12 col-md">
+                          <div class="form-floating mb-1">
+                            <input [disabled]="!edit" [(ngModel)]="user.name" required minlength="2" #name="ngModel"
+                                   ngModel name="name"
+                                   type="text"
+                                   class="form-control"
+                                   [ngClass]="{'is-invalid':name.invalid && name.touched}"
+                                   id="floatingName"
+                                   placeholder="İsim">
+                            <label for="floatingName">İsim</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md ">
+                          <div class="form-floating mb-1">
+                            <input [(ngModel)]="user.lastName" [disabled]="!edit" required minlength="2" ngModel
+                                   name="lastName" #lastName="ngModel"
+                                   type="text"
+                                   class="form-control"
+                                   [ngClass]="{'is-invalid':lastName.invalid && lastName.touched}"
+                                   id="floatingSurname"
+                                   placeholder="Soyisim">
+                            <label for="floatingSurname">Soyisim</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-1">
+                        <div class="col-sm-12 col-md">
+                          <div class="form-floating mb-1">
+                            <input [(ngModel)]="user.email" [disabled]="!edit" email required ngModel name="email"
+                                   type="email" #email="ngModel"
+                                   class="form-control" id="floatingEmail"
+                                   [ngClass]="{'is-invalid':email.invalid && email.touched}"
+                                   placeholder="isim@soyisim.com">
+                            <label for="floatingEmail">Email</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md">
+                          <div class="form-floating mb-1">
+                            <input [(ngModel)]="user.username" [disabled]="!edit" required minlength="2" ngModel
+                                   name="username" type="text"
+                                   #username="ngModel"
+                                   class="form-control"
+                                   [ngClass]="{'is-invalid':username.invalid && username.touched}"
+                                   id="floatingUsername" placeholder="Kulanıcı Adı">
+                            <label for="floatingUsername">Kulanıcı Adı</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <button *ngIf="edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                  [disabled]="!registerForm.valid "
+                                  class="btn btn-primary mx-1 my-1">
+                            Kaydet
+                          </button>
+                          <button *ngIf="edit" (click)="cancel()"
+                                  class="btn btn-danger mx-1">
+                            İptal
+                          </button>
+                        </div>
+                        <div class="col">
+                          <div *ngIf="!edit" class="d-flex flex-row justify-content-end">
+                            <a class="btn btn-outline-info btn-sm" (click)="edit=!edit"><span
+                              class="text-black">Düzenle</span></a>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="d-flex flex-column align-items-center h-100  justify-content-center">
+            <div class="card  mb-3" style="max-width: 500px;">
+              <div class="row g-0">
+                <div class="col-12">
+                  <div class="card-body">
+                    <h1 class="card-title">Şifremi Değiştir</h1>
+                    <hr>
+                    <form #passwordForm="ngForm">
+                      <div class="row mb-1">
+                        <div class="col-sm-12">
+                          <div class="form-floating mb-1">
+                            <input required minlength="5" ngModel name="lastPassword" type="password"
+                                   #lastPassword="ngModel"
+                                   class="form-control"
+                                   [ngClass]="{'is-invalid':(lastPassword.invalid && lastPassword.touched) }"
+                                   id="passwordConfirm" placeholder="Eski Şifren">
+                            <label for="floatingPasswordRepeat">Eski Şifren</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <div class="form-floating mb-1">
+                            <input required minlength="5" ngModel name="newPassword" type="password"
+                                   #newPassword="ngModel"
+                                   class="form-control"
+                                   [ngClass]="{'is-invalid':newPassword.invalid && newPassword.touched}"
+                                   id="floatingPassword" placeholder="Şifre">
+                            <label for="floatingPassword">Şifre</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <div class="form-floating mb-1">
+                            <input required minlength="5" ngModel name="newPasswordRepeat" type="password"
+                                   #newPasswordRepeat="ngModel"
+                                   class="form-control"
+                                   [ngClass]="{'is-invalid':(newPasswordRepeat.invalid && newPasswordRepeat.touched) || newPassword.value !== newPasswordRepeat.value }"
+                                   id="floatingPasswordRepeat" placeholder="Şifre Tekrar">
+                            <label for="floatingPasswordRepeat">Şifre Tekrar</label>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col">
+                          <button (click)="changePassword(passwordForm)"
+                                  [disabled]="!passwordForm.valid || newPassword.value !== newPasswordRepeat.value "
+                                  class="btn btn-primary">Kaydet
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body container">
+        <form #form="ngForm">
+          <div class="form-floating mb-3">
+            <input name="password2" ngModel #password2="ngModel"
+                   [ngClass]="{'is-invalid':password2.invalid && password2.touched}" minlength="5"
+                   required type="password"
+                   class="form-control" id="floatingPassword2" placeholder="Şifreni gir">
+            <label for="floatingPassword2">Şifreni gir</label>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="!isLoading" class="modal-footer">
+        <button type="button" id="closeModal2" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+        <button (click)="save(form,registerForm,password2.value)" type="button" class="btn btn-primary">Kaydet</button>
+      </div>
+      <div  *ngIf="isLoading" class="modal-footer">
+        <div class="spinner-grow text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

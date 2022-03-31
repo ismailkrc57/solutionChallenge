@@ -1,0 +1,158 @@
+<div class="overflow-auto container container-fluid" style="max-height: 630px">
+  <div class="row">
+    <h2>{{homework.title}}</h2>
+    <hr>
+    <p>{{homework.description}}</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      Çözümün/Yorumun
+    </div>
+    <form class="card-body" #form="ngForm">
+      <div class="form-floating mb-3">
+        <!--      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"-->
+        <!--                style="height: 100px"></textarea>-->
+        <!--        <label for="floatingTextarea2">Yorum Yap</label>-->
+        <!--      </div>-->
+        <!--        <angular-editor ngModel name="solution" required  [config]="editorConfig"></angular-editor>-->
+        <!--        <div ngModel name="solution" id="sample2" [froalaEditor] ></div>-->
+        <ckeditor required [(ngModel)]="solutionDesc" name="solution" [editor]="Editor"></ckeditor>
+        <a (click)="sendSolution(form)" class="btn btn-primary mt-1">Gönder</a>
+      </div>
+    </form>
+    <br>
+    <div class="container">
+
+      <div *ngFor="let solution of solutions; index as i" class="card border-dark mb-3">
+        <div class="card-header">
+          <div class="row d-flex">
+            <div class="col-1">
+              <ngx-avatar name="{{solution.studentName + ' ' + solution.studentLastName}}"></ngx-avatar>
+            </div>
+            <div
+              class="col-6 d-flex mx-3 mx-md-0  flex-column justify-content-center align-items-end align-items-sm-center align-items-md-start">
+              <div class="text-body" style="font-weight: bold">
+                {{solution.studentName + " " + solution.studentLastName|uppercase}}
+              </div>
+            </div>
+            <div class="col-5 d-flex flex-row justify-content-end align-items-center">
+              <div *ngIf="solution.studentUsername === studentUsername" (click)="editSolution(solution)" class="mx-2"
+                   style="cursor: pointer">
+                <span class="text-body">Düzenle</span>
+                <fa-icon class="mx-2 text-info" [icon]="faEdit"></fa-icon>
+              </div>
+              <div data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                   *ngIf="solution.studentUsername === studentUsername" class="mx-2"
+                   style="cursor: pointer">
+                <span class="text-body">Sil</span>
+                <fa-icon class="mx-2 text-danger" [icon]="faRemove"></fa-icon>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h3 class="modal-title" id="staticBackdropLabel">Çözümün Silinecek !!!</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <h5>Yaptığın çözüm tamamen silinecek Emin misin ?</h5>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                        <button (click)="deleteSolution(solution)" type="button" class="btn btn-primary">Sil</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div (click)="openAnswerModel(solution.id,true)" class="" style="cursor: pointer">
+                <span class="text-body">Cevapla</span>
+                <fa-icon class="mx-2 text-warning" [icon]="faShare"></fa-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="" [innerHTML]="sanitizer.bypassSecurityTrustHtml(solution.description)"></div>
+          <hr class="dropdown-divider">
+          <!--       ==========================================================================================   -->
+
+          <!--        =========== Yorumlar ==============-->
+          <ng-container *ngFor="let comment of comments">
+            <div class="row" *ngIf="comment.solutionId == solution.id">
+              <div class="col-1"></div>
+              <div class="col-11">
+                <div class="card border-success mb-3">
+                  <div class="card-header bg-warning bg-opacity-10">
+                    <div class="row d-flex">
+                      <div class="col-1">
+                        <ngx-avatar size="35"
+                                    name="{{comment.userFirstName + ' ' + comment.userLastName}}"></ngx-avatar>
+                      </div>
+                      <div
+                        class="col-6 d-flex mx-3 mx-md-0  flex-column justify-content-center align-items-end align-items-sm-center align-items-md-start">
+                        <div class="text-body" style="font-weight: bold">
+                          {{comment.userFirstName + " " + comment.userLastName|uppercase}}
+                        </div>
+                      </div>
+                      <div class="col-5 d-flex flex-row justify-content-end align-items-center">
+                        <div *ngIf="comment.userUsername === studentUsername" (click)="deleteComment(comment)"
+                             class="mx-2"
+                             style="cursor: pointer">
+                          <span class="text-body">Sil</span>
+                          <fa-icon class="mx-2 text-danger" [icon]="faRemove"></fa-icon>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p class="text-black">{{comment.text}}</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+          <!--        =========== Yorum Yap ==============-->
+          <div id="commentForm" *ngIf="answerModel.solutionId == solution.id && answerModel.isAnswer"
+               class="container card-body my-3">
+            <div class="row">
+              <div class="col-1 d-flex flex-column justify-content-start align-items-end">
+                <ngx-avatar size="45" name="{{user.name + ' ' + user.lastName}}"></ngx-avatar>
+              </div>
+              <div class="col-11">
+                <form class="form-floating" #commentForm="ngForm">
+                  <textarea required ngModel name="comment" class="form-control mb-1" placeholder="Leave a comment here"
+                            id="floatingTextarea"></textarea>
+                  <label for="floatingTextarea">Yorum yap...</label>
+                  <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <button (click)="sendComment(commentForm,solution.id)" type="button"
+                            class="mx-1 btn btn-outline-success">Gönder
+                    </button>
+                    <button (click)="closeAnswerModel()" type="button" class="btn btn-outline-danger">İptal</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="row card-body  d-flex flex-row justify-content-end align-items-end">
+              <div class="col">
+
+              </div>
+            </div>
+          </div>
+
+          <!--       =======================================================================================   -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+

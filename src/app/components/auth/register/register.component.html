@@ -1,0 +1,97 @@
+<div class="d-flex flex-column align-items-center h-100  justify-content-center">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <div *ngIf="!isLoading" class="card  mb-3" style="max-width: 500px;">
+    <div class="row g-0">
+      <div class="col-12 d-flex justify-content-center align-items-center w-100">
+        <img src="https://picsum.photos/700/300" class="img-fluid align-self-center rounded-start" alt="...">
+      </div>
+      <div class="col-12">
+        <div class="card-body">
+          <h1 class="card-title">Kayıt Ol</h1>
+          <hr>
+          <form #registerForm="ngForm">
+            <div class="row mb-1">
+              <div class="col-6">
+                <div class="form-floating mb-1">
+                  <input required minlength="2" #name="ngModel" ngModel name="name" type="text"
+                         class="form-control"
+                         [ngClass]="{'is-invalid':name.invalid && name.touched}"
+                         id="floatingName"
+                         placeholder="İsim">
+                  <label for="floatingName">İsim</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating mb-1">
+                  <input required minlength="2" ngModel name="lastName" #lastName="ngModel" type="text"
+                         class="form-control"
+                         [ngClass]="{'is-invalid':lastName.invalid && lastName.touched}"
+                         id="floatingSurname"
+                         placeholder="Soyisim">
+                  <label for="floatingSurname">Soyisim</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-6">
+                <div class="form-floating mb-1">
+                  <input email required ngModel name="email" type="email" #email="ngModel"
+                         class="form-control" id="floatingEmail"
+                         [ngClass]="{'is-invalid':email.invalid && email.touched}"
+                         placeholder="isim@soyisim.com">
+                  <label for="floatingEmail">Email</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating mb-1">
+                  <input required minlength="2" ngModel name="username" type="text" #username="ngModel"
+                         class="form-control"
+                         [ngClass]="{'is-invalid':username.invalid && username.touched}"
+                         id="floatingUsername" placeholder="Kulanıcı Adı">
+                  <label for="floatingUsername">Kulanıcı Adı</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-6">
+                <div class="form-floating mb-1">
+                  <input required minlength="5" ngModel name="password" type="password"
+                         #password="ngModel"
+                         class="form-control"
+                         [ngClass]="{'is-invalid':password.invalid && password.touched}"
+                         id="floatingPassword" placeholder="Şifre">
+                  <label for="floatingPassword">Şifre</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating mb-1">
+                  <input required minlength="5" ngModel name="passwordRepeat" type="password" #pasConfirm="ngModel"
+                         class="form-control"
+                         [ngClass]="{'is-invalid':(password.invalid && password.touched) || password.value !== pasConfirm.value }"
+                         id="floatingPasswordRepeat" placeholder="Şifre Tekrar">
+                  <label for="floatingPasswordRepeat">Şifre Tekrar</label>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col">
+                <button (click)="register(registerForm)" [disabled]="!registerForm.valid || password.value !== pasConfirm.value " class="btn btn-primary">Kayıt
+                  Ol
+                </button>
+              </div>
+              <div class="col">
+                <div class="d-flex flex-row justify-content-end">
+                  <a routerLink="/auth/login">Giriş yap</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
