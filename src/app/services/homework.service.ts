@@ -5,6 +5,7 @@ import {ListResponseModel} from "../models/base_models/listResponseModel";
 import {HomeworkModel} from "../models/homeworkModel";
 import {environment} from "../../environments/environment";
 import {SingleResponseModel} from "../models/base_models/singleResponseModel";
+import {ResponseModel} from "../models/base_models/responseModel";
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,16 @@ export class HomeworkService {
     return this.http.get<SingleResponseModel<HomeworkModel>>(environment.apiUrl+`homeworks/getbyid?id=${id}`)
   }
 
+  add(model: HomeworkModel): Observable<ResponseModel> {
+    return this.http.post<ResponseModel>(environment.apiUrl + "homeworks/add", model)
+  }
+
+  update(model: HomeworkModel): Observable<ResponseModel> {
+    return this.http.post<ResponseModel>(environment.apiUrl + "homeworks/add", model)
+  }
+
+  delete(model: HomeworkModel): Observable<ResponseModel> {
+    return this.http.post<ResponseModel>(environment.apiUrl + "homeworks/add", model)
+  }
 
 }

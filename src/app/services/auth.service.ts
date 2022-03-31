@@ -10,7 +10,6 @@ import {ResponseModel} from "../models/base_models/responseModel";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {AuthModel} from "../models/auth-model";
 import {Router} from "@angular/router";
-import {ListResponseModel} from "../models/base_models/listResponseModel";
 import {RoleModel} from "../models/role-model";
 
 
@@ -20,11 +19,12 @@ import {RoleModel} from "../models/role-model";
 export class AuthService {
   isLogged: BehaviorSubject<boolean>;
   authModel = new BehaviorSubject<AuthModel>(null)
-  roleModel = new BehaviorSubject<RoleModel[]>(null)
+  roleModel: RoleModel[]
   public username: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private expirationTimer: any;
 
   private jwtHelper: JwtHelperService = new JwtHelperService()
+  public Admin: BehaviorSubject<boolean> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private route: Router) {
     this.isLogged = new BehaviorSubject<boolean>(false)
@@ -44,9 +44,12 @@ export class AuthService {
       this.username.next(authModel.username)
       this.autoLogout(this.jwtHelper.getTokenExpirationDate(res.data.access_token).getTime() - new Date().getTime())
       localStorage.setItem("tokenData", JSON.stringify(authModel))
-      this.getRolesOfUser(authModel.username).subscribe({
+      this.isAdmin(authModel.username).subscribe({
         next: res => {
-          this.roleModel.next(res.data)
+          localStorage.setItem("xfc", "true")
+        },
+        error: err => {
+          localStorage.removeItem("xfc")
         }
       })
     }));
@@ -73,6 +76,14 @@ export class AuthService {
       this.username.next(loadedAuthModel.username)
       const expirationDuration = new Date(tokenData._expirationDate).getTime() - new Date().getTime()
       this.autoLogout(expirationDuration)
+      this.isAdmin(loadedAuthModel.username).subscribe({
+        next: res => {
+          localStorage.setItem("xfc", "true")
+        },
+        error: err => {
+          localStorage.removeItem("xfc")
+        }
+      })
     }
 
   }
@@ -104,8 +115,8 @@ export class AuthService {
     return this.isLogged.asObservable()
   }
 
-  getRolesOfUser(username: string): Observable<ListResponseModel<RoleModel>> {
-    return this.http.get<ListResponseModel<RoleModel>>(environment.apiUrl + `role/getallbyuser?username=${username}`)
+  isAdmin(username: string): Observable<ResponseModel> {
+    return this.http.get<ResponseModel>(environment.apiUrl + `role/isadmin?username=${username}`)
   }
 
 }

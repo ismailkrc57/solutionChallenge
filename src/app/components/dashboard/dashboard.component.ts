@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {HomeworkModel} from "../../models/homeworkModel";
+import {NgForm} from "@angular/forms";
+import {HomeworkService} from "../../services/homework.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +11,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  isLoading: false;
+  homework: HomeworkModel = {id: 0, week: 0, type: 0, date: "", title: "", description: ""}
+
+  constructor(private toast: ToastrService, private homeworkService: HomeworkService) {
+  }
 
   ngOnInit(): void {
   }
 
+  save(form: NgForm) {
+    // if (!form.valid) {
+    //   this.toast.error("lutfen bilgileri kontrol et")
+    //   return;
+    // }
+    this.homework = Object.assign(form.value)
+    let model: HomeworkModel = {
+      id: 0,
+      type: Number(this.homework.type),
+      week: Number(this.homework.week),
+      date: this.homework.date,
+      title: this.homework.title,
+      description: this.homework.description
+    }
+    console.log(model)
+    this.homeworkService.add(model).subscribe({
+      next: res => {
+        this.toast.success(res.message)
+      },
+      error: err => {
+        this.toast.error(err.error.message)
+      }
+    })
+
+  }
 }
