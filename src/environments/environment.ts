@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: "https://app-ikg.azurewebsites.net/api/"
+  apiUrl: " https://scpg-ikg.azurewebsites.net/api/"
 };
 // Import the functions you need from the SDKs you need
 
