@@ -16,7 +16,7 @@ import {AdminGuard} from "./guards/admin.guard";
 
 const routes: Routes = [
 
-  {path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard,AuthGuard]},
   {path: 'reset-password/:token', component: ResetPasswordComponent, pathMatch: "full"},
   {path: '', redirectTo: 'home/start', pathMatch: 'full'},
   {
