@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
     }), tap(isAuth => {
       if (!isAuth) {
         this.route.navigate(['start']).then(() => {
-          this.toast.info("Lütfen Giriş Yapın")
+          // this.toast.info("Lütfen Giriş Yapın")
         })
       }
     }))
