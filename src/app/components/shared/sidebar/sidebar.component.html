@@ -6,7 +6,12 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
 
         </ul>
-        <div class="accordion card-body accordion-flush overflow-auto" id="accordionFlushExample">
+        <div *ngIf="isLoading" class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" style="width: 2rem; height: 2rem;" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div *ngIf="!isLoading" class="accordion card-body accordion-flush overflow-auto" id="accordionFlushExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -17,13 +22,8 @@
             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 1 && !!isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 1" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -43,13 +43,8 @@
             <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 2 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 2" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -69,13 +64,8 @@
             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 3 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 3" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -95,13 +85,8 @@
             <div id="flush-collapseThree4" class="accordion-collapse collapse" aria-labelledby="flush-headingThree4"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 4 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 4" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -121,13 +106,8 @@
             <div id="flush-collapseThree5" class="accordion-collapse collapse" aria-labelledby="flush-headingThree5"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 5 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 5" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -147,13 +127,8 @@
             <div id="flush-collapseThree6" class="accordion-collapse collapse" aria-labelledby="flush-headingThree6"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 6 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 6" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -173,13 +148,8 @@
             <div id="flush-collapseThree7" class="accordion-collapse collapse" aria-labelledby="flush-headingThree7"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 7 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 7" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -199,13 +169,8 @@
             <div id="flush-collapseThree8" class="accordion-collapse collapse" aria-labelledby="flush-headingThree8"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 8 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 8" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -225,13 +190,8 @@
             <div id="flush-collapseThree9" class="accordion-collapse collapse" aria-labelledby="flush-headingThree9"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 9 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 9" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -251,13 +211,8 @@
             <div id="flush-collapseThree10" class="accordion-collapse collapse" aria-labelledby="flush-headingThree10"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 10 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 10" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -277,13 +232,8 @@
             <div id="flush-collapseThree11" class="accordion-collapse collapse" aria-labelledby="flush-headingThree11"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 11 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 11" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -303,13 +253,8 @@
             <div id="flush-collapseThree12" class="accordion-collapse collapse" aria-labelledby="flush-headingThree12"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 12 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 12" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -329,13 +274,8 @@
             <div id="flush-collapseThree13" class="accordion-collapse collapse" aria-labelledby="flush-headingThree13"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 13 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 13" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
@@ -355,13 +295,8 @@
             <div id="flush-collapseThree14" class="accordion-collapse collapse" aria-labelledby="flush-headingThree14"
                  data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
                 <ng-container *ngFor="let homework of homeworks; index as i">
-                  <div *ngIf="homework.week == 14 && !isLoading" (click)="collapse(homework.id)"
+                  <div *ngIf="homework.week == 14" (click)="collapse(homework.id)"
                        class="alert alert-success small text-center fw-bold"
                        [ngClass]="{'alert-info':homework.type==1, 'alert-warning':homework.type==2, 'alert-danger':homework.type==3}"
                        style="cursor: pointer" role="alert">
