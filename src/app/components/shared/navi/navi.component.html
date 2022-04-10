@@ -24,6 +24,7 @@
         <button routerLink="/auth" class="btn btn-outline-primary mx-2" type="submit">Giriş Yap</button>
         <button routerLink="/auth/register" class="btn btn-outline-primary" type="submit">Kayıt Ol</button>
       </form>
+
       <ul class="navbar-nav" *ngIf="isLogged">
         <li class="nav-item dropdown dropstart">
           <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" data-toggle="dropdown"
@@ -31,7 +32,7 @@
             <ngx-avatar name="{{user.name + ' ' + user.lastName}}"></ngx-avatar>
           </a>
 
-          <div id="myAvatar" class="dropdown-menu dropstart bg-light text-black"
+          <div *ngIf="user.name !== '?'" id="myAvatar" class="dropdown-menu dropstart bg-light text-black"
                aria-labelledby="navbarDropdownMenuLink">
             <h5 class="dropdown-item" href="#">{{user.name + " " + user.lastName|lowercase }}</h5>
             <hr class="dropdown-divider">

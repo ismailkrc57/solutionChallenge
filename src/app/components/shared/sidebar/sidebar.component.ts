@@ -13,6 +13,7 @@ export class SidebarComponent implements OnInit {
   isCollapsed: boolean = true;
   collapseMe: string = "";
   homeworks: HomeworkModel[]
+  isLoading: boolean = false;
 
   constructor(public navi: NaviService, private homeworkService: HomeworkService, private router: Router) {
     navi.getIsCollapsed().subscribe(a => {
@@ -21,8 +22,10 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.homeworkService.getAll().subscribe({
       next: res => {
+        this.isLoading = false;
         this.homeworks = res.data;
 
       }
