@@ -16,8 +16,8 @@ export class NaviComponent implements OnInit, OnDestroy {
   private userSub: Subscription
   isCollapsed: boolean = false;
   user: UserModel = {
-    name: "",
-    lastName: "",
+    name: "?",
+    lastName: "?",
     id: 0
   };
   faListCheck = faListCheck;
