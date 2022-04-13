@@ -1,6 +1,5 @@
 <div class="d-flex flex-column align-items-center h-100  justify-content-center">
-  <app-spinner *ngIf="isLoading"></app-spinner>
-  <div *ngIf="!isLoading" class="card  mb-3" style="max-width: 500px;">
+  <div class="card  mb-3" style="max-width: 500px;">
     <div class="row g-0">
       <div class="col-12 d-flex justify-content-center align-items-center w-100">
         <img src="https://picsum.photos/700/300" class="img-fluid align-self-center rounded-start" alt="...">
@@ -76,12 +75,17 @@
 
 
             <div class="row">
-              <div class="col">
+              <div *ngIf="!isLoading" class="col">
                 <button (click)="register(registerForm)" [disabled]="!registerForm.valid || password.value !== pasConfirm.value " class="btn btn-primary">Kayıt
                   Ol
                 </button>
               </div>
-              <div class="col">
+              <div *ngIf="isLoading" class="col d-flex flex-row justify-content-center align-items-center">
+                <div class="spinner-grow text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+              <div *ngIf="!isLoading" class="col">
                 <div class="d-flex flex-row justify-content-end">
                   <a routerLink="/auth/login">Giriş yap</a>
                 </div>
