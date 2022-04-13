@@ -17,6 +17,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   userFullName: string = "";
   username: string = "";
   isLoading: boolean = false;
+  isLoadingPassword: boolean = false;
 
   constructor(private naviService: NaviService, private userService: UserService, private toastr: ToastrService, private auth: AuthService) {
   }
@@ -43,9 +44,11 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   }
 
   changePassword(form: NgForm) {
+    this.isLoadingPassword = true;
     let passwordChangeModel = {username: "", lastPassword: "", newPassword: ""}
     let loginModel = {username: "", password: ""}
     if (!form.valid) {
+      this.isLoadingPassword = false;
       this.toastr.error("Lütfen Bilgilerinizi eksiksiz tamamlayın")
       return;
     }
@@ -59,15 +62,14 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         loginModel.username = passwordChangeModel.username
         loginModel.password = passwordChangeModel.newPassword;
         this.toastr.success("Şifreniz Başarılı Bir Şekilde değiştirildi")
+        this.isLoadingPassword = false;
         form.reset();
         this.auth.login(loginModel).subscribe({
-          next: () => {
-
-          }
         })
 
       },
       error: () => {
+        this.isLoadingPassword = false;
         this.toastr.error("Lütfen girdiğin bilgileri kontrol et !!!")
       }
     })
