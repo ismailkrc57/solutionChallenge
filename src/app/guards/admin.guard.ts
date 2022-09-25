@@ -3,6 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {Observable} from 'rxjs';
 import {AuthService} from "../services/auth.service";
 import {ToastrService} from "ngx-toastr";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,12 @@ export class AdminGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (localStorage.getItem("xfc") === "true") {
-      return true
-    } else {
-      this.route.navigate(['start']).then()
-      return false
-    }
-
+    return this.authService.isAdmin().pipe(map(a => {
+      if (a.success)
+        return true
+      else {
+        return this.route.createUrlTree(['/home/start'])
+      }
+    }));
   }
 }

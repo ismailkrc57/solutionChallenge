@@ -115,7 +115,7 @@ export class AuthService {
     return this.isLogged.asObservable()
   }
 
-  isAdmin(username: string): Observable<ResponseModel> {
+  isAdmin(username: string = this.username.value): Observable<ResponseModel> {
     return this.http.get<ResponseModel>(environment.apiUrl + `role/isadmin?username=${username}`)
   }
 
